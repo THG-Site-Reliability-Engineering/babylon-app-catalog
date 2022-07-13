@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gateway.fullname" . }}-deploy
+  labels:
+    {{- include "gateway.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "gateway.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: {{ .Values.annotations.prometheus.port | quote }}
+        prometheus.io/scrape: {{ .Values.annotations.prometheus.scrape | quote }}
+        prometheus.io/scheme: {{ .Values.annotations.prometheus.scheme | quote }}
+      labels:
+        {{- include "gateway.selectorLabels" . | nindent 8 }}
+    spec:
+      {{ if .Values.hostAliases }}
+      hostAliases:
+      {{- range .Values.hostAliases }}
+      - ip: {{ .ip }}
+        hostnames:
+        - {{ .hostname }}
+      {{- end  }}
+      {{ end }}
+      {{ if .Values.applicationContainer.serviceAccount }}
+      serviceAccountName: {{ .Values.applicationContainer.serviceAccount }}
+      {{ else }}
+      serviceAccountName: {{ include "gateway.name" . }}
+      {{ end }}
+      containers:
+        - name: {{ include "gateway.name" . }}
+          image: "{{ .Values.applicationContainer.image.repository }}:{{ .Values.applicationContainer.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.applicationContainer.image.pullPolicy }}
+          env:
+          {{- range .Values.applicationContainer.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end  }}
+          ports:
+          {{- range .Values.applicationContainer.ports }}
+          - name: {{ .name }}
+            containerPort: {{ .port }}
+            protocol: {{ .protocol }}
+         {{- end  }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probe.liveness }}
+              port: {{ .Values.probe.port }}
+            initialDelaySeconds: {{ .Values.probe.initialDelayInSeconds }}
+            periodSeconds: {{ .Values.probe.pollPeriodInSeconds }}
+            {{ if .Values.probe.timeoutSeconds }}
+            timeoutSeconds: {{ .Values.probe.timeoutSeconds }}
+            {{ end }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probe.readiness }}
+              port:  {{ .Values.probe.port }}
+            initialDelaySeconds: {{ .Values.probe.initialDelayInSeconds }}
+            periodSeconds: {{ .Values.probe.pollPeriodInSeconds }}
+            {{ if .Values.probe.timeoutSeconds }}
+            timeoutSeconds: {{ .Values.probe.timeoutSeconds }}
+            {{ end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /config/
+            name: config
+            readOnly: true
+          - mountPath: /certs/
+            name: certs
+            readOnly: true
+      {{ if .Values.imagePullSecretsName }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecretsName }}
+      {{ end }}
+      volumes:
+      - name: config
+        configMap:
+          defaultMode: 420
+          name: {{ include "gateway.fullname" . }}-config
+          items:
+          - key: config.yaml
+            path: app/config.yaml
+      - name: certs
+        secret:
+          secretName: gateway-tls
+          items:
+          - key: tls.crt
+            path: "cert.pem"
+          - key: tls.key
+            path: "cert-key.pem"

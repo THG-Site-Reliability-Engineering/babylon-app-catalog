@@ -1,0 +1,35 @@
+imagePullSecrets: []
+
+dockerconfigjson: ""
+
+podSecurityContext:
+  enabled: true
+  fsGroup: 2000
+
+securityContext:
+  enabled: true
+  capabilities:
+    drop:
+    - ALL
+  # readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
