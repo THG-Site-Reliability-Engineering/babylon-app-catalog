@@ -1,23 +1,19 @@
-{{- range $service := .Values.service }}
+{{ range .Values.service }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  {{ if (($service.metadata).name) }}
-  name: {{ $service.metadata.name }}
-  {{ else }}
-  name: {{ include "gateway.fullname" $ }}-svc
-  {{ end }}
+  name: {{ .metadata.name }}
   labels:
     {{- include "gateway.labels" $ | nindent 4 }}
 spec:
-  type: {{ $service.type }}
+  type: {{ .type }}
   ports:
-    - port: {{ $service.svcPort }}
-      targetPort: {{ $service.targetPort }}
-      nodePort: {{ $service.nodePort }}
-      protocol: {{ $service.protocol }}
-      name: {{ $service.name }}
+    - port: {{ .svcPort }}
+      targetPort: {{ .targetPort }}
+      nodePort: {{ .nodePort }}
+      protocol: {{ .protocol }}
+      name: {{ .name }}
   selector:
     {{- include "gateway.selectorLabels" $ | nindent 4 }}
-  {{- end}}
+{{ end }}

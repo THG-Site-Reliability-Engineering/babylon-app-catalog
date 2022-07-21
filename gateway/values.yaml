@@ -15,9 +15,19 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 8080
+applicationContainer:
+  image: {}
+  env: []
+
+probe: {}
+
+service: []
+
+annotations:
+  prometheus:
+    port: 9090
+    scrape: true
+    scheme: http
 
 ingress:
   enabled: false
