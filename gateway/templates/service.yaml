@@ -1,0 +1,19 @@
+{{ range .Values.service }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .metadata.name }}
+  labels:
+    {{- include "gateway.labels" $ | nindent 4 }}
+spec:
+  type: {{ .type }}
+  ports:
+    - port: {{ .svcPort }}
+      targetPort: {{ .targetPort }}
+      nodePort: {{ .nodePort }}
+      protocol: {{ .protocol }}
+      name: {{ .name }}
+  selector:
+    {{- include "gateway.selectorLabels" $ | nindent 4 }}
+{{ end }}
