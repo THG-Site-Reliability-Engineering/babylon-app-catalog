@@ -87,7 +87,7 @@ spec:
             path: app/config.yaml
       - name: certs
         secret:
-          secretName: gateway-tls
+          secretName: {{ include "gateway.fullname" . }}-tls
           items:
           - key: tls.crt
             path: "cert.pem"

@@ -5,5 +5,4 @@ metadata:
   labels:
     {{- include "gateway.labels" . | nindent 4 }}
 data:
-  config.yaml: |
-{{ .Values.applicationContainer.image.appConfig }}
+  config.yaml: {{ .Values.applicationContainer.appConfig }}
