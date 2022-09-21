@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   compute:
   - apiVersion: v2
+    appVersion: v0.0.1-dev.1
+    created: "2022-09-21T10:18:44.621846849Z"
+    description: A Helm chart for Kubernetes
+    digest: 3de26521a7631bea56265d7e1d8d02275cb0414a123bf6c3254a529fc734afe1
+    name: compute
+    type: application
+    urls:
+    - https://THG-Site-Reliability-Engineering.github.io/babylon-app-catalog/compute-0.0.1-dev.1.tgz
+    version: 0.0.1-dev.1
+  - apiVersion: v2
     appVersion: v0.0.0-dev.0
-    created: "2022-09-21T07:15:35.77010235Z"
+    created: "2022-09-21T10:18:44.621325755Z"
     description: A Helm chart for Kubernetes
     digest: 1a82416673e5640e1a94f8a86f1a9e4f954e6404e1c05d7ec55e48f83eb00b97
     name: compute
@@ -14,7 +24,7 @@ entries:
   gateway:
   - apiVersion: v2
     appVersion: v0.0.1-dev.4
-    created: "2022-09-21T07:15:35.772937373Z"
+    created: "2022-09-21T10:18:44.624085323Z"
     description: A Helm chart for Kubernetes
     digest: 4747d7d19220084013cf6c3264402ce89bb3dd4c3a42dd4530fe874e70ec71a1
     name: gateway
@@ -24,7 +34,7 @@ entries:
     version: 0.0.1-dev.4
   - apiVersion: v2
     appVersion: v0.0.1-dev.3
-    created: "2022-09-21T07:15:35.772471569Z"
+    created: "2022-09-21T10:18:44.623596929Z"
     description: A Helm chart for Kubernetes
     digest: 49d9788efe21549f5535403712424e63fb04eb89ca782724609b7d43ec7079c3
     name: gateway
@@ -34,7 +44,7 @@ entries:
     version: 0.0.1-dev.3
   - apiVersion: v2
     appVersion: v0.0.1-dev.2
-    created: "2022-09-21T07:15:35.771982665Z"
+    created: "2022-09-21T10:18:44.623218933Z"
     description: A Helm chart for Kubernetes
     digest: 3572f2978b23718acede3b0eee4cf741afbef21088cfeb9b5f8ecb7afa872e03
     name: gateway
@@ -44,7 +54,7 @@ entries:
     version: 0.0.1-dev.2
   - apiVersion: v2
     appVersion: v0.0.1-dev.1
-    created: "2022-09-21T07:15:35.771481561Z"
+    created: "2022-09-21T10:18:44.622855237Z"
     description: A Helm chart for Kubernetes
     digest: 4b471ef58c81a673a2ba5268f61157903c2ec227563636e22e6f69b3432e4d73
     name: gateway
@@ -54,7 +64,7 @@ entries:
     version: 0.0.1-dev.1
   - apiVersion: v2
     appVersion: v0.0.1-dev.0
-    created: "2022-09-21T07:15:35.770660655Z"
+    created: "2022-09-21T10:18:44.622452542Z"
     description: A Helm chart for Kubernetes
     digest: d0cb7dc5a1568a0673785f7864eebfee02130dd66ef2d8b769bafb326cdf2ab6
     name: gateway
@@ -62,4 +72,4 @@ entries:
     urls:
     - https://THG-Site-Reliability-Engineering.github.io/babylon-app-catalog/gateway-0.0.1-dev.0.tgz
     version: 0.0.1-dev.0
-generated: "2022-09-21T07:15:35.768928741Z"
+generated: "2022-09-21T10:18:44.619977171Z"
